@@ -1,5 +1,4 @@
 import os
-from pprint import pprint
 import shutil
 
 
@@ -40,8 +39,6 @@ class FileMoveManager:
         self._base_dir = base_dir
         self._folders = folders
 
-        pprint(self._files_with_destination)
-
     def test(self):
         pass
 
@@ -49,7 +46,7 @@ class FileMoveManager:
         for folder in self._folders:
             files = self._files_with_destination[folder]
             for file in files:
-                shutil.copy(
+                shutil.move(
                     os.path.join(self._base_dir, file), 
                     os.path.join(self._base_dir, folder, file)
                 )
@@ -61,15 +58,10 @@ class Organizer:
 
     def __init__(self) -> None:
         self._files = FileNameManager(self._get_files(), Organizer.__USER_DOWNLOADER_FOLDER)
+        self.file_movier = None
         self._folders = []
 
         self._create_folders(list(self._files._get_keys().keys()))
-
-        self.file_movier = FileMoveManager(
-            self._files._get_keys(),
-            self._folders,
-            Organizer.__USER_DOWNLOADER_FOLDER
-        )
 
     def _create_folders(self, folder_output: list[str]):
         for folder in folder_output:
@@ -82,4 +74,9 @@ class Organizer:
         return os.listdir(Organizer.__USER_DOWNLOADER_FOLDER)
         
     def move_files(self):
+        self.file_movier = FileMoveManager(
+            self._files._get_keys(),
+            self._folders,
+            Organizer.__USER_DOWNLOADER_FOLDER
+        )
         self.file_movier.move_files()
