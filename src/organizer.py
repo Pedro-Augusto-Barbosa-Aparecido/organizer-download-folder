@@ -74,6 +74,8 @@ class Organizer:
         return os.listdir(Organizer.__USER_DOWNLOADER_FOLDER)
         
     def move_files(self):
+        if len(self._folders) == 0:
+            self._folders = self._files._get_keys().keys()
         self.file_movier = FileMoveManager(
             self._files._get_keys(),
             self._folders,
