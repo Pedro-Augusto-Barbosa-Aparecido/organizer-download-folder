@@ -15,3 +15,7 @@
 ## Run Project
 
 - On Folder Path, open terminal and run ``python ./main.py``.
+
+## Download Executable File
+
+ - [app.exe](https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/raw/master/dist/main.exe)
