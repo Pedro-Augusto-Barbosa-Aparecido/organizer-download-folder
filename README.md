@@ -18,4 +18,4 @@
 
 ## Download Executable File
 
- - [app.exe](/dist/main.exe)
+ - [app.exe](https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/raw/master/dist/main.exe)
