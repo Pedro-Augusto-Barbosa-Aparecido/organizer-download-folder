@@ -21,14 +21,9 @@ class Installer:
 
     def __init__(self) -> None:
         self.__program_files_folders = os.environ["ProgramFiles(x86)"]
-        self.__USER_DOWNLOADS_FOLDER = os.path.join(
-            os.path.dirname(__file__),
-            "main.exe"
-        )
+        self.__USER_DOWNLOADS_FOLDER = os.path.join(os.path.expanduser("~"), "Downloads")
 
-        if not self.__verify_exist_main_exe():
-            print(Style.BRIGHT + Fore.RED + "Could not find main.exe" + Style.RESET_ALL)
-            exit(0)
+        self.__status: bool = False
 
     def __mount_file_register(self, project_name, excutable_file_path, icon_path):
         pass
@@ -41,11 +36,6 @@ class Installer:
 
     def __move_project_to_program_files(self):
         pass
-
-    def __verify_exist_main_exe(self):
-        if os.path.isfile(self.__USER_DOWNLOADS_FOLDER):
-            return True
-        return False
 
     def install(self):
         pass
