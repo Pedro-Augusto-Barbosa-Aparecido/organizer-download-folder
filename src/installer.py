@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 
 from colorama import Style, Fore
 
@@ -22,6 +23,7 @@ class Installer:
     def __init__(self) -> None:
         self.__program_files_folders = os.environ["ProgramFiles(x86)"]
         self.__USER_DOWNLOADS_FOLDER = os.path.join(os.path.expanduser("~"), "Downloads")
+        self.__current_folder = os.path.dirname(sys.executable)
 
         self.__status: bool = False
 
