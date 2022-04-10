@@ -4,3 +4,4 @@ requests
 selenium
 wget
 tqdm
+webdriver_manager
