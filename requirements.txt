@@ -1,2 +1,6 @@
 pyinstaller
 colorama
+requests
+selenium
+wget
+tqdm
