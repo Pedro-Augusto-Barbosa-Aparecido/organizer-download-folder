@@ -98,10 +98,27 @@ class Installer:
             exit(-1)
 
     def __mount_file_register(self, project_name, excutable_file_path, icon_path):
-        pass
+        self.__content_reg_file = f"""Windows Registry Editor Version 5.00
+
+[HKEY_CLASSES_ROOT\\Directory\\Background\\shell\\{project_name}]
+@="Organizar pasta aqui..."
+"Icon"="{icon_path}"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\{project_name}\command]
+@="\"{excutable_file_path}\" \"%v.\""
+        
+        """
+        self.__organizer_path_reg = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), 'organizer.reg').replace('/', '\\')
+        with open(self.__organizer_path_reg, 'w') as file_reg:
+            file_reg.write(self.__content_reg_file)
+
+        return self.__content_reg_file
 
     def __registry_on_windows_register(self):
-        pass
+        try:
+            os.system(self.__organizer_path_reg)
+        except Exception as e:
+            print(e)
 
     def __compile_main_dot_py(self):
         try:
@@ -148,6 +165,8 @@ class Installer:
         self.__unzip_chromedriver(self.__filename_project)
         self.__install_requirements_txt()
         self.__compile_main_dot_py()
+        print(self.__mount_file_register("Organizer", os.path.join(self.__dist_folder, "main.exe"), self.__icon_path))
+        self.__registry_on_windows_register()
 
 
 if __name__ == "__main__":
