@@ -1,2 +1,5 @@
 /organizer-venv
+/build
+/dist
 organizer.reg
+main.spec
