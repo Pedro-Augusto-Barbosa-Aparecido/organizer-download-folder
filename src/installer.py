@@ -35,7 +35,7 @@ class Installer:
         self.__CHROME_DRIVER_LINK = "https://chromedriver.storage.googleapis.com/98.0.4758.80/chromedriver_win32.zip"
         self.__CHROME_DRIVER_FOLDER = os.path.join(os.path.expanduser("~"), "Documents\\Organizer")
         self.__CHROME_DRIVER_PATH = ""
-        self.__PROJECT_ZIP_LINK = "https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/archive/refs/heads/master.zip"
+        self.__PROJECT_ZIP_LINK = "https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/archive/refs/heads/main.zip"
 
         self.__status: bool = False
 
