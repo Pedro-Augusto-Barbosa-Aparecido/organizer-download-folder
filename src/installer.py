@@ -11,6 +11,7 @@ from tqdm import tqdm
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
+from PyInstaller.config import CONF
 
 
 class Installer:
@@ -35,7 +36,7 @@ class Installer:
         self.__CHROME_DRIVER_LINK = "https://chromedriver.storage.googleapis.com/98.0.4758.80/chromedriver_win32.zip"
         self.__CHROME_DRIVER_FOLDER = os.path.join(os.path.expanduser("~"), "Documents\\Organizer")
         self.__CHROME_DRIVER_PATH = ""
-        self.__PROJECT_ZIP_LINK = "https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/archive/refs/heads/main.zip"
+        self.__PROJECT_ZIP_LINK = "https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/archive/refs/heads/prod.zip"
 
         self.__status: bool = False
 
@@ -89,11 +90,11 @@ class Installer:
             # self.__CHROME_DRIVER_PATH = os.path.join(self.__CHROME_DRIVER_FOLDER, file_name)
             # shutil.move(self.__CHROME_DRIVER_PATH, os.path.join(self.__CHROME_DRIVER_FOLDER, "drivers\chrome"))
             # self.__CHROME_DRIVER_PATH = os.path.join(self.__CHROME_DRIVER_FOLDER, "drivers\chrome", file_name)
-            print(f"\n\nDownload concluido, driver salvo na pasta {Fore.GREEN}{Style.BRIGHT}{os.path.join(self.__CHROME_DRIVER_FOLDER, filename.replace('.zip', ''))}{Style.RESET_ALL}")
-            print(f"{Fore.RED}{Style.DIM}{'Não delete está pasta ou arquivo durante a instalação'.upper()}{Style.RESET_ALL}\n\n")
+            print(f"\n\nDownload concluido, driver salvo na pasta {os.path.join(self.__CHROME_DRIVER_FOLDER, filename.replace('.zip', ''))}")
+            print(f"{'Não delete está pasta ou arquivo durante a instalação'.upper()}\n\n")
         except Exception as e:
             print(e)
-            print(f"Houve um erro durante a extração do driver, verifique se o diretório {Fore.GREEN}{Style.NORMAL}'Documents'{Style.RESET_ALL}, está com permissão livre para manipulaçãode arquivos!")
+            print(f"Houve um erro durante a extração do driver, verifique se o diretório 'Documents', está com permissão livre para manipulaçãode arquivos!")
             exit(-1)
 
     def __mount_file_register(self, project_name, excutable_file_path, icon_path):
@@ -103,15 +104,36 @@ class Installer:
         pass
 
     def __compile_main_dot_py(self):
-        pass
+        try:
+            self.__icon_path = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), 'app.ico').replace('/', '\\')
+            self.__main_file = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), 'main.py').replace('/', '\\')
+            
+            # Configuração do diretório de output da pasta build e da pasta dist
+            self.__build_folder = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), "build").replace('/', "\\")
+            self.__dist_folder = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), "dist").replace('/', "\\")
 
-    def __move_project_to_program_files(self):
-        pass
+            os.system(f'pyinstaller -c -F --icon={self.__icon_path} --distpath={self.__dist_folder} --workpath={self.__build_folder} {self.__main_file}')
+        except:
+            print(f"""
+                Erro ao compilar arquivo {self.__main_file}
+                """)
+
+    def __install_requirements_txt(self):
+        try:
+            requirements_path = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), 'requirements.txt').replace('/', '\\')
+            os.system(f"pip install -r {requirements_path}")
+        except Exception as e:
+            print(f"""Houve um erro durante a instalação dos subpacotes, 
+                    verifique se o arquivo requirements.txt está na pasta 
+                    {os.path.join(self.__CHROME_DRIVER_FOLDER, 'organizer-download-folder-master')}""")
+            print(e)
+            exit(-1)
+
 
     def __download_files(self):
         if not os.path.exists(self.__CHROME_DRIVER_FOLDER):
             os.mkdir(self.__CHROME_DRIVER_FOLDER)
-        print(f"\nDownloding Files from {Fore.BLUE}{Style.DIM}{self.__PROJECT_ZIP_LINK}{Style.RESET_ALL}", end="")
+        print(f"\nDownloding Files from {self.__PROJECT_ZIP_LINK}", end="")
         try: 
             print("")
             self.__filename_project = wget.download(self.__PROJECT_ZIP_LINK, self.__CHROME_DRIVER_FOLDER, bar=self.__bar_progress)
@@ -124,6 +146,8 @@ class Installer:
         # self.__download_chrome_driver()
         self.__download_files()
         self.__unzip_chromedriver(self.__filename_project)
+        self.__install_requirements_txt()
+        self.__compile_main_dot_py()
 
 
 if __name__ == "__main__":
