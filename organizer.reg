@@ -2,7 +2,7 @@ Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\organizer_folders]
 @="Organizar pasta aqui..."
-"Icon"="C:\\Users\\pedro\\Documents\\Programas\\Python\\organizer\\app.ico"
+"Icon"="D:\\codes\\Python\\organizer\\app.ico"
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\organizer_folders\command]
-@="\"C:\\Users\\pedro\\Documents\\Programas\\Python\\organizer\\dist\\main.exe\" \"%v.\""
+@="\"D:\\codes\\Python\\organizer\\dist\\main.exe\" \"%v.\""

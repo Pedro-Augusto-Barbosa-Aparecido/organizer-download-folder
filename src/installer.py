@@ -34,7 +34,7 @@ class Installer:
         self.__CURRENT_FOLDER = os.path.dirname(sys.executable)
         self.__PROGRAM_FILE_X86_FOLDER = os.environ.get("ProgramFiles(x86)")
         self.__CHROME_DRIVER_LINK = "https://chromedriver.storage.googleapis.com/98.0.4758.80/chromedriver_win32.zip"
-        self.__CHROME_DRIVER_FOLDER = os.path.join(os.path.expanduser("~"), "Documents\\Organizer")
+        self.__CHROME_DRIVER_FOLDER = os.path.join(os.path.expanduser("~"), "AppData\\Local")
         self.__CHROME_DRIVER_PATH = ""
         self.__PROJECT_ZIP_LINK = "https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/archive/refs/heads/prod.zip"
 
@@ -97,7 +97,9 @@ class Installer:
             print(f"Houve um erro durante a extração do driver, verifique se o diretório 'Documents', está com permissão livre para manipulaçãode arquivos!")
             exit(-1)
 
-    def __mount_file_register(self, project_name, excutable_file_path, icon_path):
+    def __mount_file_register(self, project_name: str, excutable_file_path: str, icon_path: str):
+        icon_path = icon_path.replace("\\", "\\\\")
+        excutable_file_path = excutable_file_path.replace('\\', '\\\\')
         self.__content_reg_file = f"""Windows Registry Editor Version 5.00
 
 [HKEY_CLASSES_ROOT\\Directory\\Background\\shell\\{project_name}]
@@ -105,9 +107,8 @@ class Installer:
 "Icon"="{icon_path}"
 
 [HKEY_CLASSES_ROOT\Directory\Background\shell\{project_name}\command]
-@="\"{excutable_file_path}\" \"%v.\""
-        
-        """
+@="\\"{excutable_file_path}\\" \\"%v.\\""
+"""
         self.__organizer_path_reg = os.path.join(self.__CHROME_DRIVER_FOLDER, self.__filename_project.replace('.zip', ''), 'organizer.reg').replace('/', '\\')
         with open(self.__organizer_path_reg, 'w') as file_reg:
             file_reg.write(self.__content_reg_file)
