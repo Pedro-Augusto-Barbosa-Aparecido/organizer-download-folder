@@ -1,5 +1,7 @@
 import os
 import shutil
+import sys
+import time
 
 
 class FileNameManager:
@@ -57,7 +59,8 @@ class Organizer:
     __USER_DOWNLOADER_FOLDER = os.path.join(__USER_FOLDER, "Downloads")
 
     def __init__(self) -> None:
-        self._files = FileNameManager(self._get_files(), Organizer.__USER_DOWNLOADER_FOLDER)
+        self.__path_of_execution = sys.argv[1].replace('.', '').replace('\\', '\\\\')
+        self._files = FileNameManager(self._get_files(), self.__path_of_execution)
         self.file_movier = None
         self._folders = []
 
@@ -65,13 +68,13 @@ class Organizer:
 
     def _create_folders(self, folder_output: list[str]):
         for folder in folder_output:
-            if not os.path.isdir(os.path.join(Organizer.__USER_DOWNLOADER_FOLDER, folder)) and \
-               not os.path.exists(os.path.join(Organizer.__USER_DOWNLOADER_FOLDER, folder)):
-                os.mkdir(os.path.join(Organizer.__USER_DOWNLOADER_FOLDER, folder))
+            if not os.path.isdir(os.path.join(self.__path_of_execution, folder)) and \
+               not os.path.exists(os.path.join(self.__path_of_execution, folder)):
+                os.mkdir(os.path.join(self.__path_of_execution, folder))
                 self._folders.append(folder)
 
     def _get_files(self):
-        return os.listdir(Organizer.__USER_DOWNLOADER_FOLDER)
+        return os.listdir(self.__path_of_execution)
         
     def move_files(self):
         if len(self._folders) == 0:
@@ -79,6 +82,6 @@ class Organizer:
         self.file_movier = FileMoveManager(
             self._files._get_keys(),
             self._folders,
-            Organizer.__USER_DOWNLOADER_FOLDER
+            self.__path_of_execution
         )
         self.file_movier.move_files()
