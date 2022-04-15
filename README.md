@@ -2,7 +2,7 @@
 
 ## Description
 
-  <p align="center">The project organize yours files on folders by file extention, for now it ignores folders. <strong>ONLY WINDOWS</strong></p>
+  <p align="center">The project organize yours files on folders by file extention, for now it ignores folders. <strong color="red">ONLY WINDOWS</strong></p>
 
 ## Prerequisites
 
