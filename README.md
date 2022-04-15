@@ -2,11 +2,11 @@
 
 ## Description
 
-  <p align="center">The project organize yours files on folders by file extention, for now it ignores folders.</p>
+  <p align="center">The project organize yours files on folders by file extention, for now it ignores folders. **ONLY WINDOWS**</p>
 
 ## Prerequisites
 
-- [ ] Python.
+- [ ] [Python](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe)  
 
 ## Installation
 
