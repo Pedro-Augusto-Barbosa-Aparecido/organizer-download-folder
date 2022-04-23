@@ -1,0 +1,10 @@
+D:\codes\Python\organizer\src\interface\gui\bin\Debug\gui.exe.config
+D:\codes\Python\organizer\src\interface\gui\bin\Debug\gui.exe
+D:\codes\Python\organizer\src\interface\gui\bin\Debug\gui.pdb
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.csproj.AssemblyReference.cache
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.Properties.Resources.resources
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.csproj.GenerateResource.cache
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.csproj.CoreCompileInputs.cache
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.exe
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.pdb
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.Organizer.resources

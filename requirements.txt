@@ -5,3 +5,4 @@ selenium
 wget
 tqdm
 webdriver_manager
+PyQt5
