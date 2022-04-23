@@ -35,8 +35,12 @@ namespace gui
             this.seleterFolder = new System.Windows.Forms.Button();
             this.pathSelected = new System.Windows.Forms.TextBox();
             this.addFolder = new System.Windows.Forms.Button();
-            this.newFolderName = new System.Windows.Forms.TextBox();
             this.extentionDropBox = new System.Windows.Forms.ComboBox();
+            this.btnGenerateByExt = new System.Windows.Forms.Button();
+            this.foldersList = new System.Windows.Forms.TreeView();
+            this.btnClear = new System.Windows.Forms.Button();
+            this.btnClearNode = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // folderSearch
@@ -77,40 +81,91 @@ namespace gui
             // 
             this.addFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.addFolder.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.addFolder.Location = new System.Drawing.Point(12, 50);
+            this.addFolder.Location = new System.Drawing.Point(12, 39);
             this.addFolder.Name = "addFolder";
-            this.addFolder.Size = new System.Drawing.Size(173, 20);
+            this.addFolder.Size = new System.Drawing.Size(173, 21);
             this.addFolder.TabIndex = 3;
             this.addFolder.Text = "Add Folder";
             this.addFolder.UseVisualStyleBackColor = true;
+            this.addFolder.Click += new System.EventHandler(this.addFolder_Click);
             this.addFolder.Move += new System.EventHandler(this.addFolder_Move);
-            // 
-            // newFolderName
-            // 
-            this.newFolderName.Location = new System.Drawing.Point(191, 51);
-            this.newFolderName.Name = "newFolderName";
-            this.newFolderName.Size = new System.Drawing.Size(173, 20);
-            this.newFolderName.TabIndex = 4;
-            this.newFolderName.Text = "Digite o nome da pasta....";
-            this.newFolderName.Enter += new System.EventHandler(this.newFolderName_Enter);
-            this.newFolderName.Leave += new System.EventHandler(this.newFolderName_Leave);
             // 
             // extentionDropBox
             // 
             this.extentionDropBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.extentionDropBox.FormattingEnabled = true;
-            this.extentionDropBox.Location = new System.Drawing.Point(370, 51);
+            this.extentionDropBox.Location = new System.Drawing.Point(191, 39);
             this.extentionDropBox.Name = "extentionDropBox";
             this.extentionDropBox.Size = new System.Drawing.Size(154, 21);
             this.extentionDropBox.TabIndex = 5;
+            // 
+            // btnGenerateByExt
+            // 
+            this.btnGenerateByExt.AutoSize = true;
+            this.btnGenerateByExt.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGenerateByExt.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnGenerateByExt.Location = new System.Drawing.Point(550, 39);
+            this.btnGenerateByExt.Name = "btnGenerateByExt";
+            this.btnGenerateByExt.Size = new System.Drawing.Size(165, 46);
+            this.btnGenerateByExt.TabIndex = 7;
+            this.btnGenerateByExt.Text = "Generate Folders By Extention";
+            this.btnGenerateByExt.UseVisualStyleBackColor = true;
+            this.btnGenerateByExt.MouseHover += new System.EventHandler(this.btnGenerateByExt_MouseHover);
+            // 
+            // foldersList
+            // 
+            this.foldersList.Location = new System.Drawing.Point(12, 102);
+            this.foldersList.Name = "foldersList";
+            this.foldersList.ShowNodeToolTips = true;
+            this.foldersList.Size = new System.Drawing.Size(703, 336);
+            this.foldersList.TabIndex = 8;
+            // 
+            // btnClear
+            // 
+            this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnClear.Location = new System.Drawing.Point(352, 39);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(192, 46);
+            this.btnClear.TabIndex = 9;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            // 
+            // btnClearNode
+            // 
+            this.btnClearNode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnClearNode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnClearNode.Location = new System.Drawing.Point(12, 61);
+            this.btnClearNode.Name = "btnClearNode";
+            this.btnClearNode.Size = new System.Drawing.Size(173, 24);
+            this.btnClearNode.TabIndex = 10;
+            this.btnClearNode.Text = "Clear Selected Folder";
+            this.btnClearNode.UseVisualStyleBackColor = true;
+            this.btnClearNode.Click += new System.EventHandler(this.btnClearNode_Click);
+            // 
+            // button1
+            // 
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button1.Location = new System.Drawing.Point(191, 61);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(155, 24);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Clear All Folders";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 450);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnClearNode);
+            this.Controls.Add(this.btnClear);
+            this.Controls.Add(this.foldersList);
+            this.Controls.Add(this.btnGenerateByExt);
             this.Controls.Add(this.extentionDropBox);
-            this.Controls.Add(this.newFolderName);
             this.Controls.Add(this.addFolder);
             this.Controls.Add(this.pathSelected);
             this.Controls.Add(this.seleterFolder);
@@ -131,8 +186,12 @@ namespace gui
         private System.Windows.Forms.TextBox pathSelected;
         private System.Windows.Forms.FolderBrowserDialog folderSearch;
         private System.Windows.Forms.Button addFolder;
-        private System.Windows.Forms.TextBox newFolderName;
-        private System.Windows.Forms.ComboBox extentionDropBox;
+        private System.Windows.Forms.Button btnGenerateByExt;
+        private System.Windows.Forms.Button btnClear;
+        private System.Windows.Forms.Button btnClearNode;
+        private System.Windows.Forms.Button button1;
+        public System.Windows.Forms.TreeView foldersList;
+        public System.Windows.Forms.ComboBox extentionDropBox;
     }
 }
 

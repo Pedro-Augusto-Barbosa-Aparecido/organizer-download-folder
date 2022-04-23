@@ -8,3 +8,5 @@ D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.csproj.CoreCompileInpu
 D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.exe
 D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.pdb
 D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.Organizer.resources
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.csproj.SuggestedBindingRedirects.cache
+D:\codes\Python\organizer\src\interface\gui\obj\Debug\gui.SelectNameFolderWindow.resources

@@ -14,10 +14,35 @@ namespace gui
 {
     public partial class Organizer : Form
     {
+        public String folderName = "";
         public Organizer()
         {
             InitializeComponent();
         }
+
+        private void deleteNode (TreeView nd, bool selected = true, TreeNode node = null)
+        {
+            if (selected)
+            {
+                var nodeSelectedName = nd.SelectedNode.Name;
+                nd.SelectedNode.Remove();
+                this.successMessage("Node " + nodeSelectedName + " removed with success!", "Operation Remove");
+            } 
+            else if (node != null)
+            {
+                for (int i = 0; i < node.Nodes.Count; i++)
+                {
+                    node.Remove();
+                }
+            }
+            
+        }
+
+        private void successMessage (String message, String title)
+        {
+            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
 
         private void seleterFolder_Click(object sender, EventArgs e)
         {
@@ -31,23 +56,13 @@ namespace gui
                 foreach(string file in files)
                 {
                     string fileExt = new FileInfo(file).Extension.Replace('.', ' ').TrimStart('.');
+                    if (extentionDropBox.FindString(fileExt) == -1)
+                        extentionDropBox.Items.Add(fileExt);
                     
                 }
 
             }
 
-        }
-
-        private void newFolderName_Enter(object sender, EventArgs e)
-        {
-            if (newFolderName.Text == "Digite o nome da pasta....")
-                newFolderName.Text = "";
-        }
-
-        private void newFolderName_Leave(object sender, EventArgs e)
-        {
-            if (newFolderName.Text == "")
-                newFolderName.Text = "Digite o nome da pasta....";
         }
 
         private void addFolder_Move(object sender, EventArgs e)
@@ -57,12 +72,44 @@ namespace gui
 
         private void Organizer_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Organizer_Click(object sender, EventArgs e)
         {
-            Organizer
+            
+        }
+
+        private void addFolder_Click(object sender, EventArgs e)
+        {
+            SelectNameFolderWindow dialogFolder = new SelectNameFolderWindow(extentionDropBox.Text, this);
+            dialogFolder.ShowDialog();
+
+        }
+
+        private void btnGenerateByExt_MouseHover(object sender, EventArgs e)
+        {
+            btnGenerateByExt.Cursor = Cursors.Hand;
+        }
+
+        private void btnClearNode_Click(object sender, EventArgs e)
+        {
+            if (foldersList.SelectedNode != null)
+            {
+                this.deleteNode(foldersList);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < foldersList.Nodes.Count; i++)
+            {
+                for (int j = 0; j < foldersList.Nodes[i].Nodes.Count; j++)
+                {
+                    this.deleteNode(foldersList, false, foldersList.Nodes[i].Nodes[j]);
+                }
+            }
+            this.successMessage("Nodes removed with success!", "Operation Remove");
         }
     }
 }
