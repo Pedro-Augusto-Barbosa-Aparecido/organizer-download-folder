@@ -42,6 +42,8 @@ namespace gui
             this.btnClearNode = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnDeleteSelected = new System.Windows.Forms.Button();
+            this.btnCreateFolder = new System.Windows.Forms.Button();
+            this.btnMoveFiles = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // folderSearch
@@ -82,9 +84,9 @@ namespace gui
             // 
             this.addFolder.Cursor = System.Windows.Forms.Cursors.Hand;
             this.addFolder.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.addFolder.Location = new System.Drawing.Point(12, 39);
+            this.addFolder.Location = new System.Drawing.Point(191, 39);
             this.addFolder.Name = "addFolder";
-            this.addFolder.Size = new System.Drawing.Size(173, 21);
+            this.addFolder.Size = new System.Drawing.Size(155, 21);
             this.addFolder.TabIndex = 3;
             this.addFolder.Text = "Add Folder";
             this.addFolder.UseVisualStyleBackColor = true;
@@ -95,9 +97,9 @@ namespace gui
             // 
             this.extentionDropBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.extentionDropBox.FormattingEnabled = true;
-            this.extentionDropBox.Location = new System.Drawing.Point(191, 39);
+            this.extentionDropBox.Location = new System.Drawing.Point(12, 39);
             this.extentionDropBox.Name = "extentionDropBox";
-            this.extentionDropBox.Size = new System.Drawing.Size(154, 21);
+            this.extentionDropBox.Size = new System.Drawing.Size(173, 21);
             this.extentionDropBox.TabIndex = 5;
             this.extentionDropBox.SelectedIndexChanged += new System.EventHandler(this.extentionDropBox_SelectedIndexChanged);
             this.extentionDropBox.Click += new System.EventHandler(this.extentionDropBox_Click);
@@ -118,11 +120,12 @@ namespace gui
             // 
             // foldersList
             // 
-            this.foldersList.Location = new System.Drawing.Point(12, 102);
+            this.foldersList.Location = new System.Drawing.Point(12, 157);
             this.foldersList.Name = "foldersList";
             this.foldersList.ShowNodeToolTips = true;
-            this.foldersList.Size = new System.Drawing.Size(703, 336);
+            this.foldersList.Size = new System.Drawing.Size(703, 281);
             this.foldersList.TabIndex = 8;
+            this.foldersList.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.foldersList_AfterSelect);
             // 
             // btnClear
             // 
@@ -172,11 +175,36 @@ namespace gui
             this.btnDeleteSelected.UseVisualStyleBackColor = true;
             this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
             // 
+            // btnCreateFolder
+            // 
+            this.btnCreateFolder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnCreateFolder.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCreateFolder.Location = new System.Drawing.Point(550, 92);
+            this.btnCreateFolder.Name = "btnCreateFolder";
+            this.btnCreateFolder.Size = new System.Drawing.Size(165, 59);
+            this.btnCreateFolder.TabIndex = 13;
+            this.btnCreateFolder.Text = "Create Folders";
+            this.btnCreateFolder.UseVisualStyleBackColor = true;
+            this.btnCreateFolder.Click += new System.EventHandler(this.btnCreateFolder_Click);
+            // 
+            // btnMoveFiles
+            // 
+            this.btnMoveFiles.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnMoveFiles.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnMoveFiles.Location = new System.Drawing.Point(352, 92);
+            this.btnMoveFiles.Name = "btnMoveFiles";
+            this.btnMoveFiles.Size = new System.Drawing.Size(192, 59);
+            this.btnMoveFiles.TabIndex = 14;
+            this.btnMoveFiles.Text = "Move Files";
+            this.btnMoveFiles.UseVisualStyleBackColor = true;
+            // 
             // Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 450);
+            this.Controls.Add(this.btnMoveFiles);
+            this.Controls.Add(this.btnCreateFolder);
             this.Controls.Add(this.btnDeleteSelected);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnClearNode);
@@ -211,6 +239,8 @@ namespace gui
         public System.Windows.Forms.TreeView foldersList;
         public System.Windows.Forms.ComboBox extentionDropBox;
         private System.Windows.Forms.Button btnDeleteSelected;
+        private System.Windows.Forms.Button btnCreateFolder;
+        private System.Windows.Forms.Button btnMoveFiles;
     }
 }
 

@@ -67,6 +67,12 @@ namespace gui
             }
         }
 
+        private void alertMessage (string message, string title,
+            MessageBoxIcon icon = MessageBoxIcon.Warning, MessageBoxButtons buttons = MessageBoxButtons.OK)
+        {
+            MessageBox.Show(message, title, buttons, icon);
+        }
+
         private void seleterFolder_Click(object sender, EventArgs e)
         {
             folderSelected = false;
@@ -257,6 +263,35 @@ namespace gui
                 if (res == DialogResult.Yes)
                 {
                     generateByExtention();
+                }
+            }
+        }
+
+        private void foldersList_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            e.Node.Expand();
+        }
+
+        private void btnCreateFolder_Click(object sender, EventArgs e)
+        {
+            if (foldersList.Nodes.Count == 0)
+            {
+                alertMessage("No Folder on Tree View", "Warning");
+                return;
+            }
+
+            string path;
+            string[] existPaths = new string[foldersList.Nodes.Count];
+            foreach (TreeNode folders in foldersList.Nodes)
+            {
+                path = @"" + pathSelected.Text + "\\" + folders.Text;
+                if (Directory.Exists(path))
+                {
+                    existPaths.Append(path);
+                }
+                else
+                {
+                    Directory.CreateDirectory(path);
                 }
             }
         }
