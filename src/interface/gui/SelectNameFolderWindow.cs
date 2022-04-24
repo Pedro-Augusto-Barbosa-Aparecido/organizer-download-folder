@@ -48,14 +48,15 @@ namespace gui
                     TreeNode folder = organizer.foldersList.Nodes.Add(organizer.folderName);
                     folder.Name = textFolderName.Text;
 
-                    folder.Nodes.Add(new TreeNode(organizer.extentionDropBox.Text));
+                    var node = folder.Nodes.Add(organizer.extentionDropBox.Text);
+                    node.Name = organizer.extentionDropBox.Text;
 
                 }
                 else
                 {
                     var folder = organizer.foldersList.Nodes[organizer.foldersList.Nodes.IndexOfKey(organizer.folderName)];
-                    TreeNode[] treeNodes = folder.Nodes.Find(organizer.extentionDropBox.Text, true);
-                    if (treeNodes.Length > 0)
+                    TreeNode[] treeNodes = folder.Nodes.Find(organizer.extentionDropBox.Text, false);
+                    if (treeNodes.Length == 0)
                     {
                         var node = folder.Nodes.Add(organizer.extentionDropBox.Text);
                         node.Name = organizer.extentionDropBox.Text;

@@ -94,22 +94,86 @@ namespace gui
 
         private void btnClearNode_Click(object sender, EventArgs e)
         {
-            if (foldersList.SelectedNode != null)
-            {
-                this.deleteNode(foldersList);
+           try
+                {
+                var result = MessageBox.Show("You want delete only childs?", "Quastion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    var confirm = MessageBox.Show("Are you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Yes)
+                    {
+                        foldersList.SelectedNode.Parent.Remove();
+                        this.successMessage("Node removed with success!", "Operation Remove");
+                    }
+                }
+                else
+                {
+                    var confirm = MessageBox.Show("Are you sure remove child of this node?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (confirm == DialogResult.Yes)
+                    {
+                        for (int i = 0; i < foldersList.SelectedNode.Parent.Nodes.Count; i++)
+                        {
+                            foldersList.SelectedNode.Parent.Nodes[i].Remove();
+                        }
+                        this.successMessage("Nodes removed with success!", "Operation Remove");
+                    }
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.HelpLink, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < foldersList.Nodes.Count; i++)
+            try
             {
-                for (int j = 0; j < foldersList.Nodes[i].Nodes.Count; j++)
+                var result = MessageBox.Show("Are you sure?", "Warning", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if ((result != DialogResult.Yes) || (foldersList.Nodes.Count == 0))
                 {
-                    this.deleteNode(foldersList, false, foldersList.Nodes[i].Nodes[j]);
+                    if ((result == DialogResult.Yes) && (foldersList.Nodes.Count == 0))
+                    {
+                        MessageBox.Show("No Nodes to delete!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    }
+                    return;
                 }
+
+                for (int i = 0; i < foldersList.Nodes.Count; i++)
+                {
+                    for (int j = 0; j < foldersList.Nodes[i].Nodes.Count; j++)
+                    {
+                        foldersList.Nodes[i].Nodes[j].Remove();
+                    }
+                }
+                this.successMessage("Nodes removed with success!", "Operation Remove");
             }
-            this.successMessage("Nodes removed with success!", "Operation Remove");
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.HelpLink, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foldersList.Nodes.Clear();
+                this.successMessage("Tree View has cleared!", "Success Operation");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.HelpLink, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnDeleteSelected_Click(object sender, EventArgs e)
+        {
+            if (foldersList.SelectedNode != null)
+            {
+                this.deleteNode(foldersList);
+            }
         }
     }
 }

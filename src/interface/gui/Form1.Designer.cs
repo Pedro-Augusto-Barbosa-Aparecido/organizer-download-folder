@@ -41,6 +41,7 @@ namespace gui
             this.btnClear = new System.Windows.Forms.Button();
             this.btnClearNode = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnDeleteSelected = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // folderSearch
@@ -124,12 +125,13 @@ namespace gui
             // 
             this.btnClear.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnClear.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnClear.Location = new System.Drawing.Point(352, 39);
+            this.btnClear.Location = new System.Drawing.Point(352, 61);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(192, 46);
+            this.btnClear.Size = new System.Drawing.Size(192, 24);
             this.btnClear.TabIndex = 9;
             this.btnClear.Text = "Clear";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnClearNode
             // 
@@ -141,7 +143,6 @@ namespace gui
             this.btnClearNode.TabIndex = 10;
             this.btnClearNode.Text = "Clear Selected Folder";
             this.btnClearNode.UseVisualStyleBackColor = true;
-            this.btnClearNode.Click += new System.EventHandler(this.btnClearNode_Click);
             // 
             // button1
             // 
@@ -155,11 +156,24 @@ namespace gui
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // btnDeleteSelected
+            // 
+            this.btnDeleteSelected.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDeleteSelected.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDeleteSelected.Location = new System.Drawing.Point(352, 39);
+            this.btnDeleteSelected.Name = "btnDeleteSelected";
+            this.btnDeleteSelected.Size = new System.Drawing.Size(192, 21);
+            this.btnDeleteSelected.TabIndex = 12;
+            this.btnDeleteSelected.Text = "Delete Selected";
+            this.btnDeleteSelected.UseVisualStyleBackColor = true;
+            this.btnDeleteSelected.Click += new System.EventHandler(this.btnDeleteSelected_Click);
+            // 
             // Organizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(727, 450);
+            this.Controls.Add(this.btnDeleteSelected);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnClearNode);
             this.Controls.Add(this.btnClear);
@@ -192,6 +206,7 @@ namespace gui
         private System.Windows.Forms.Button button1;
         public System.Windows.Forms.TreeView foldersList;
         public System.Windows.Forms.ComboBox extentionDropBox;
+        private System.Windows.Forms.Button btnDeleteSelected;
     }
 }
 
