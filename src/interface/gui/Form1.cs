@@ -15,6 +15,9 @@ namespace gui
     public partial class Organizer : Form
     {
         public String folderName = "";
+
+        private bool folderSelected = false;
+
         public Organizer()
         {
             InitializeComponent();
@@ -43,14 +46,36 @@ namespace gui
             MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private void generateByExtention ()
+        {
+            try
+            {
+                foreach (var item in extentionDropBox.Items)
+                {
+                    var node = foldersList.Nodes.Add(item.ToString().ToUpper());
+                    node.Name = item.ToString().ToUpper();
+
+                    var childNode = node.Nodes.Add(item.ToString());
+                    childNode.Name = item.ToString();
+
+                }
+                successMessage("Folders was generate with success!", "Success Operation");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.HelpLink, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         private void seleterFolder_Click(object sender, EventArgs e)
         {
+            folderSelected = false;
             DialogResult result = folderSearch.ShowDialog();
 
             if (result == DialogResult.OK)
             {
                 pathSelected.Text = folderSearch.SelectedPath;
+                folderSelected = true;
                 var files = Directory.GetFiles(pathSelected.Text);
 
                 foreach(string file in files)
@@ -61,6 +86,10 @@ namespace gui
                     
                 }
 
+            } 
+            else
+            {
+                folderSelected = false;
             }
 
         }
@@ -192,6 +221,43 @@ namespace gui
             {
                 MessageBox.Show("No Folder Selected, please select a path to organizer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 seleterFolder_Click(sender, e);
+            }
+        }
+
+        private void btnGenerateByExt_Click(object sender, EventArgs e)
+        { 
+            if (pathSelected.Text == "No Folder Select")
+            {
+                seleterFolder_Click(sender, e);
+                if (!folderSelected)
+                {
+                    MessageBox.Show("No Folder Selected!", "Warning", MessageBoxButtons.OK);
+                    return;
+                }
+            }
+            if (foldersList.Nodes.Count > 0)
+            {
+                var res = MessageBox.Show("Are you sure? This action going to clear currents separations!!", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (res == DialogResult.Yes)
+                {
+                    var result = MessageBox.Show("Are you sure? This action going to create folders with extention!!\n\nEx: .png -> PNG", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        foldersList.Nodes.Clear();
+                        generateByExtention();
+                    }
+                } 
+            }
+            else
+            {
+                var res = MessageBox.Show("Are you sure? This action going to create folders with extention!!\n\nEx: .png -> PNG", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+                if (res == DialogResult.Yes)
+                {
+                    generateByExtention();
+                }
             }
         }
     }

@@ -113,6 +113,7 @@ namespace gui
             this.btnGenerateByExt.TabIndex = 7;
             this.btnGenerateByExt.Text = "Generate Folders By Extention";
             this.btnGenerateByExt.UseVisualStyleBackColor = true;
+            this.btnGenerateByExt.Click += new System.EventHandler(this.btnGenerateByExt_Click);
             this.btnGenerateByExt.MouseHover += new System.EventHandler(this.btnGenerateByExt_MouseHover);
             // 
             // foldersList
