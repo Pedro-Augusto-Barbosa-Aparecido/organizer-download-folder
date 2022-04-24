@@ -7,10 +7,12 @@
 ## Prerequisites
 
 - [ ] [Python](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe)  
+- [ ] [.Net](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48)
 
-## Installation
+## Installation For Conttribute
 
 - Clone Repository ``git clone https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder.git``.
+- Install Dependencies ``pip install -r requirements.txt`` **:warning: Run this on virtual environment**
 
 ## Run Project
 
