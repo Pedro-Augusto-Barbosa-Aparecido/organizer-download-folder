@@ -37,47 +37,120 @@ namespace gui
 
         private void addFolderOnTreeView ()
         {
-            organizer.folderName = textFolderName.Text;
-            if ((organizer.extentionDropBox.Text != "") 
-                && (organizer.extentionDropBox.Text != null)
-                && (textFolderName.Text != "")
-                && (textFolderName.Text != null))
+            try
             {
-                if (!organizer.foldersList.Nodes.ContainsKey(organizer.folderName))
+                organizer.folderName = textFolderName.Text;
+                if ((organizer.extentionDropBox.Text != "")
+                    && (organizer.extentionDropBox.Text != null)
+                    && (textFolderName.Text != "")
+                    && (textFolderName.Text != null))
                 {
-                    TreeNode folder = organizer.foldersList.Nodes.Add(organizer.folderName);
-                    folder.Name = textFolderName.Text;
-
-                    var node = folder.Nodes.Add(organizer.extentionDropBox.Text);
-                    node.Name = organizer.extentionDropBox.Text;
-
-                }
-                else
-                {
-                    var folder = organizer.foldersList.Nodes[organizer.foldersList.Nodes.IndexOfKey(organizer.folderName)];
-                    TreeNode[] treeNodes = folder.Nodes.Find(organizer.extentionDropBox.Text, false);
-                    if (treeNodes.Length == 0)
+                    if (!organizer.foldersList.Nodes.ContainsKey(organizer.folderName))
                     {
-                        var node = folder.Nodes.Add(organizer.extentionDropBox.Text);
-                        node.Name = organizer.extentionDropBox.Text;
+                        TreeNode folder = organizer.foldersList.Nodes.Add(organizer.folderName);
+                        folder.Name = textFolderName.Text;
+
+                        bool alreadyExist = false;
+
+                        foreach (TreeNode node in organizer.foldersList.Nodes)
+                        {
+                            var treeNode = node.Nodes.Find(organizer.extentionDropBox.Text, true);
+                            if (treeNode.Length == 1)
+                            {
+                                var result = MessageBox.Show("Extention Already exist on folder: " + treeNode[0].Parent.Text + ", do you want move the extention of folder?"
+                                    , "Move Extention of Folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                                if (result == DialogResult.Yes)
+                                {
+                                    var origin = treeNode[0].Parent.Text;
+                                    treeNode[0].Remove();
+
+                                    var destin = folder.Nodes.Add(organizer.extentionDropBox.Text);
+                                    destin.Name = organizer.extentionDropBox.Text;
+
+                                    MessageBox.Show("Extention moved with success, from " + origin + " to " + destin.Name, "Success Operation",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                }
+
+                                alreadyExist = true;
+
+                                break;
+
+                            }
+                        }
+
+                        if (!alreadyExist)
+                        {
+                            var newNode = folder.Nodes.Add(organizer.extentionDropBox.Text);
+                            newNode.Name = organizer.extentionDropBox.Text;
+                        }
                     }
                     else
                     {
-                        MessageBox.Show("Extention Already exist in this folder!", "Duplicate Extention", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                        var folder = organizer.foldersList.Nodes[organizer.foldersList.Nodes.IndexOfKey(organizer.folderName)];
+                        TreeNode[] treeNodes = folder.Nodes.Find(organizer.extentionDropBox.Text, true);
+                        bool alreadyExist = false;
+
+                        foreach (TreeNode node in organizer.foldersList.Nodes)
+                        {
+                            var treeNode = node.Nodes.Find(organizer.extentionDropBox.Text, true);
+                            if (treeNode.Length == 1)
+                            {
+                                var result = MessageBox.Show("Extention Already exist on folder: " + treeNode[0].Parent.Text + ", do you want move the extention of folder?"
+                                    , "Move Extention of Folder", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                                if (result == DialogResult.Yes)
+                                {
+                                    var origin = treeNode[0].Parent.Text;
+                                    treeNode[0].Remove();
+
+                                    var destin = folder.Nodes.Add(organizer.extentionDropBox.Text);
+                                    destin.Name = organizer.extentionDropBox.Text;
+
+                                    MessageBox.Show("Extention moved with success, from " + origin + " to " + destin.Name, "Success Operation",
+                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                }
+
+                                alreadyExist = true;
+
+                                break;
+
+                            }
+                        }
+                        
+                        if (!alreadyExist)
+                        {
+                            if (treeNodes.Length == 0)
+                            {
+                                var node = folder.Nodes.Add(organizer.extentionDropBox.Text);
+                                node.Name = organizer.extentionDropBox.Text;
+                            }
+                            else if (treeNodes[0].Parent.Text == organizer.folderName)
+                            {
+                                MessageBox.Show("Extention Already exist in this folder!", "Duplicate Extention", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+
                     }
                 }
+                else
+                {
+                    var button = MessageBoxButtons.OK;
+                    var icon = MessageBoxIcon.Error;
+                    String title = (textFolderName.Text != "") ? "Extention Error" : "Folder Error";
+                    String msg = (textFolderName.Text != "") ? "Extention not selected!" : "Folder Field is empty";
+                    MessageBox.Show(msg, title, button, icon);
+
+                }
+
+                this.Close();
             }
-            else
+            catch (Exception ex)
             {
-                var button = MessageBoxButtons.OK;
-                var icon = MessageBoxIcon.Error;
-                String title = (textFolderName.Text != "") ? "Extention Error" : "Folder Error";
-                String msg = (textFolderName.Text != "") ? "Extention not selected!" : "Folder Field is empty";
-                MessageBox.Show(msg, title, button, icon);
-
+                MessageBox.Show(ex.Message + "\n" + ex.HelpLink, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            this.Close();
         }
 
         private void btnConfirmar_Click(object sender, EventArgs e)

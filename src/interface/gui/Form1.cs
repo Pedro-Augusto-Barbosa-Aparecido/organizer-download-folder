@@ -82,8 +82,16 @@ namespace gui
 
         private void addFolder_Click(object sender, EventArgs e)
         {
-            SelectNameFolderWindow dialogFolder = new SelectNameFolderWindow(extentionDropBox.Text, this);
-            dialogFolder.ShowDialog();
+            if (pathSelected.Text == "No Folder Select")
+            {
+                MessageBox.Show("No Folder Selected, please select a path to organizer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                seleterFolder_Click(sender, e);
+            }
+            else
+            {
+                SelectNameFolderWindow dialogFolder = new SelectNameFolderWindow(extentionDropBox.Text, this);
+                dialogFolder.ShowDialog();
+            }
 
         }
 
@@ -92,11 +100,11 @@ namespace gui
             btnGenerateByExt.Cursor = Cursors.Hand;
         }
 
-        private void btnClearNode_Click(object sender, EventArgs e)
+        private void BtnClearNode_Click(object sender, EventArgs e)
         {
            try
                 {
-                var result = MessageBox.Show("You want delete only childs?", "Quastion", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                var result = MessageBox.Show("You want delete this node?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     var confirm = MessageBox.Show("Are you sure?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -108,13 +116,10 @@ namespace gui
                 }
                 else
                 {
-                    var confirm = MessageBox.Show("Are you sure remove child of this node?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    var confirm = MessageBox.Show("Are you sure remove childs of this node?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (confirm == DialogResult.Yes)
                     {
-                        for (int i = 0; i < foldersList.SelectedNode.Parent.Nodes.Count; i++)
-                        {
-                            foldersList.SelectedNode.Parent.Nodes[i].Remove();
-                        }
+                        foldersList.SelectedNode.Parent.Nodes.Clear();
                         this.successMessage("Nodes removed with success!", "Operation Remove");
                     }
                 }
@@ -173,6 +178,20 @@ namespace gui
             if (foldersList.SelectedNode != null)
             {
                 this.deleteNode(foldersList);
+            }
+        }
+
+        private void extentionDropBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void extentionDropBox_Click(object sender, EventArgs e)
+        {
+            if (pathSelected.Text == "No Folder Select")
+            {
+                MessageBox.Show("No Folder Selected, please select a path to organizer!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                seleterFolder_Click(sender, e);
             }
         }
     }

@@ -99,6 +99,8 @@ namespace gui
             this.extentionDropBox.Name = "extentionDropBox";
             this.extentionDropBox.Size = new System.Drawing.Size(154, 21);
             this.extentionDropBox.TabIndex = 5;
+            this.extentionDropBox.SelectedIndexChanged += new System.EventHandler(this.extentionDropBox_SelectedIndexChanged);
+            this.extentionDropBox.Click += new System.EventHandler(this.extentionDropBox_Click);
             // 
             // btnGenerateByExt
             // 
@@ -143,6 +145,7 @@ namespace gui
             this.btnClearNode.TabIndex = 10;
             this.btnClearNode.Text = "Clear Selected Folder";
             this.btnClearNode.UseVisualStyleBackColor = true;
+            this.btnClearNode.Click += new System.EventHandler(this.BtnClearNode_Click);
             // 
             // button1
             // 
