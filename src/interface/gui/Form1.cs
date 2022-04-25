@@ -17,6 +17,8 @@ namespace gui
         public String folderName = "";
 
         private bool folderSelected = false;
+        private bool alreadyCreateFolders = false;
+        private string[] files;
 
         public Organizer()
         {
@@ -59,7 +61,7 @@ namespace gui
                     childNode.Name = item.ToString();
 
                 }
-                successMessage("Folders was generate with success!", "Success Operation");
+                this.successMessage("Folders was generate with success!", "Success Operation");
             }
             catch (Exception ex)
             {
@@ -67,22 +69,27 @@ namespace gui
             }
         }
 
-        private void alertMessage (string message, string title,
+        private void alertMessage (string message, string title = "Warning",
             MessageBoxIcon icon = MessageBoxIcon.Warning, MessageBoxButtons buttons = MessageBoxButtons.OK)
         {
             MessageBox.Show(message, title, buttons, icon);
         }
 
+        private void normalMessage (string message, string title)
+        {
+            MessageBox.Show(message, title);
+        }
+
         private void seleterFolder_Click(object sender, EventArgs e)
         {
-            folderSelected = false;
+            this.folderSelected = false;
             DialogResult result = folderSearch.ShowDialog();
 
             if (result == DialogResult.OK)
             {
                 pathSelected.Text = folderSearch.SelectedPath;
-                folderSelected = true;
-                var files = Directory.GetFiles(pathSelected.Text);
+                this.folderSelected = true;
+                this.files = Directory.GetFiles(pathSelected.Text);
 
                 foreach(string file in files)
                 {
@@ -95,7 +102,7 @@ namespace gui
             } 
             else
             {
-                folderSelected = false;
+                this.folderSelected = false;
             }
 
         }
@@ -252,7 +259,7 @@ namespace gui
                     if (result == DialogResult.Yes)
                     {
                         foldersList.Nodes.Clear();
-                        generateByExtention();
+                        this.generateByExtention();
                     }
                 } 
             }
@@ -262,7 +269,7 @@ namespace gui
 
                 if (res == DialogResult.Yes)
                 {
-                    generateByExtention();
+                    this.generateByExtention();
                 }
             }
         }
@@ -276,22 +283,78 @@ namespace gui
         {
             if (foldersList.Nodes.Count == 0)
             {
-                alertMessage("No Folder on Tree View", "Warning");
+                this.alertMessage("No Folder on Tree View", "Warning");
                 return;
             }
 
             string path;
-            string[] existPaths = new string[foldersList.Nodes.Count];
+            string existPaths = "Folder that already exist: ";
             foreach (TreeNode folders in foldersList.Nodes)
             {
                 path = @"" + pathSelected.Text + "\\" + folders.Text;
                 if (Directory.Exists(path))
                 {
-                    existPaths.Append(path);
+                    existPaths.Concat(folders.Name);
                 }
                 else
                 {
                     Directory.CreateDirectory(path);
+                }
+            }
+
+            if (existPaths != "Folder that already exist: ")
+            {
+                this.normalMessage(existPaths, "Warning");
+            }
+
+        }
+
+        private void btnMoveFiles_Click(object sender, EventArgs e)
+        {
+            if (!this.alreadyCreateFolders)
+            {
+                alertMessage("Create Folders before move files, please click on button: 'Create Folders'");
+                return;
+            }
+
+            string path;
+            foreach (TreeNode folders in foldersList.Nodes)
+            {
+                path = @"" + pathSelected.Text + "\\" + folders.Text;
+                if (!Directory.Exists(path))
+                {
+                    alertMessage("Folder '" + folders.Text + "' not exist!");
+                    return;
+                }
+                else
+                {
+                    try
+                    {
+                        foreach (TreeNode ext in folders.Nodes)
+                        {
+                            foreach (var file in this.files)
+                            {
+                                if ((File.Exists(file)) && (file.EndsWith(ext.Text)))
+                                {
+                                    try
+                                    {
+                                        Directory.Move(file, path);
+                                    }
+                                    catch (Exception exc)
+                                    {
+                                        alertMessage("Error during move file: " + file);
+                                        MessageBox.Show(exc.Message + "\n" + exc.HelpLink + "\nProgram stoped process", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                        return;
+                                    }
+                                }
+                                else
+                                {
+                                    alertMessage("Error during move file: " + file + "\nThis file not exist, program stoped process");
+                                    return;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

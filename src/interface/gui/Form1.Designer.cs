@@ -197,6 +197,7 @@ namespace gui
             this.btnMoveFiles.TabIndex = 14;
             this.btnMoveFiles.Text = "Move Files";
             this.btnMoveFiles.UseVisualStyleBackColor = true;
+            this.btnMoveFiles.Click += new System.EventHandler(this.btnMoveFiles_Click);
             // 
             // Organizer
             // 
