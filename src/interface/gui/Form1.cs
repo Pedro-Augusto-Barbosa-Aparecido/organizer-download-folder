@@ -307,6 +307,8 @@ namespace gui
                 this.normalMessage(existPaths, "Warning");
             }
 
+            this.alreadyCreateFolders = true;
+
         }
 
         private void btnMoveFiles_Click(object sender, EventArgs e)
@@ -314,6 +316,12 @@ namespace gui
             if (!this.alreadyCreateFolders)
             {
                 alertMessage("Create Folders before move files, please click on button: 'Create Folders'");
+                return;
+            }
+
+            if (foldersList.Nodes.Count == 0)
+            {
+                alertMessage("Create at least one node on TreeView");
                 return;
             }
 
@@ -334,11 +342,13 @@ namespace gui
                         {
                             foreach (var file in this.files)
                             {
-                                if ((File.Exists(file)) && (file.EndsWith(ext.Text)))
+                                var extentionTest = Path.GetExtension(file);
+                                if ((File.Exists(file)) && (extentionTest == ("." + ext.Text.Trim())))
                                 {
                                     try
                                     {
-                                        Directory.Move(file, path);
+                                        var destPath = path + "\\" + file.Split('\\').Last();
+                                        Directory.Move(@"" + file, destPath);
                                     }
                                     catch (Exception exc)
                                     {
@@ -347,16 +357,19 @@ namespace gui
                                         return;
                                     }
                                 }
-                                else
-                                {
-                                    alertMessage("Error during move file: " + file + "\nThis file not exist, program stoped process");
-                                    return;
-                                }
                             }
                         }
+                    } catch (Exception exc)
+                    {
+                        alertMessage("Error during read folders on TreeView. Process was end!!");
+                        MessageBox.Show(exc.Message + "\n" + exc.HelpLink + "\nProgram stoped process", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
                     }
                 }
             }
+
+            this.successMessage("Files moved!!", "Success Operation");
+
         }
     }
 }
