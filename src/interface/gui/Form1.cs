@@ -308,6 +308,7 @@ namespace gui
             }
 
             this.alreadyCreateFolders = true;
+            this.successMessage("Folders created!", "Operation Success");
 
         }
 
