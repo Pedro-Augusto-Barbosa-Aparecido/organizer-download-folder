@@ -20,4 +20,7 @@
 
 ## Download Executable File
 
- - [installer.exe](https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/raw/master/installer.exe)
+ - Installer for script without interface
+   - [installer.exe](https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/raw/master/installer.exe)
+ - Installer for interface Mode
+   - [installer.msi](https://github.com/Pedro-Augusto-Barbosa-Aparecido/organizer-download-folder/blob/master/src/interface/gui/release/installer/Debug/installer.msi)
