@@ -4,6 +4,20 @@
 
   <p align="center">The project organize yours files on folders by file extention, for now it ignores folders. <strong color="red">ONLY WINDOWS</strong></p>
 
+## Instruction of GUI
+
+  ### Functions
+     - Select folder: Select a folder on your computer where you want to organize.
+     - Text Input: Only show folder path.
+     - Drop Down: Show all extentions of files in folder.
+     - Add Folder: Create a folder in TreeView with the extention that you choice.
+     - Delete Selected: Delete selected node.
+     - Clear Selected Folder: Clear selected folder node.
+     - Clear All Folder: Clear all folders in TreeView.
+     - Clear: Clear TreeView.
+     - Generate By Extention: Create folders by file extention.
+     - Move Files: Move files according to the folder the extension is in.
+     - Create Folders: Create all folders.
 ## Prerequisites
 
 - [ ] [Python](https://www.python.org/ftp/python/3.10.4/python-3.10.4-amd64.exe)  
